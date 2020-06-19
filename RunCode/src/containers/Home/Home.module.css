@@ -1,0 +1,45 @@
+.Header{
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  background-attachment:scroll;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  overflow: hidden;
+  position:fixed;
+  right : 0px;
+  transition: right 0.4s ease-out;
+
+}
+.MailLogo{
+  position: relative;
+  margin-top: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.Logo{
+  position: relative;
+  float: left;
+  color: white;
+  left:10px;
+
+}
+
+
+
+.root {
+  width: 40%;
+  height: 35vh;
+  position: relative;
+  float: right;
+  top: 25vh;
+  right: 10vw;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 32px;
+}

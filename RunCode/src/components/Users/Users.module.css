@@ -1,0 +1,47 @@
+.Users{
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  background-color: #393e46;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  overflow: scroll;
+}
+
+.Lable{
+  display: block;
+  font-size:36px;
+  text-decoration: underline;
+  text-decoration-color: #888888;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px #888888;
+}
+
+.Ourteam{
+  width:80%;
+  height:60%;
+  margin-left: 300px;
+  margin-top: 130px;
+  margin-bottom: 70px;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 0 3px #e8e4e1;
+}
+
+
+.Reveal{
+
+  float: left;
+  text-shadow: 3px 3px grey;
+  color:white;
+  left: 30px;
+  font-size: 48px;
+  font-style: oblique;
+  font-weight: bold;
+  display: block;
+}
