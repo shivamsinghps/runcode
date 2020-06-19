@@ -18,10 +18,11 @@ export const auth_success = (authtoken,authid,admin) =>{
 }
 
 export const auth_google = (idToken,expiresIn,localId,admin) =>{
+	const adminstate = admin === "false" ? false:true
 
 	return dispatch =>{
 
-		dispatch(auth_success(idToken,localId,admin))
+		dispatch(auth_success(idToken,localId,adminstate))
 		dispatch(authinvalidate(expiresIn))
 	}
 }

@@ -11,9 +11,14 @@ Auth Credentials (In this project its GOOGLE)
 #run in root(server) ,RunCode(client) to install the dependencies
 npm install
 
-#after that 
+#after that
 #start server by running the following command in root dir:
-node server.js
+node server.js || npm satrt
 
 #start client by running the following command in RunCode dir:
 npm start
+
+
+#NOTE:when using the respective credentials for login, then only can acess admin scope:
+email:1605480@kiit.ac.in
+password:05320532

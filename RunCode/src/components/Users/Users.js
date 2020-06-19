@@ -18,7 +18,6 @@ const profile = {
 const [posts, setPosts] = useState([]);
 
 useEffect(() => {
-  console.log(props.isAuthenticated);
   if(props.isAuthenticated!==null){
     axios.get('http://localhost:9001/api/users',{
   headers: {
@@ -27,7 +26,7 @@ useEffect(() => {
         setPosts(res.data.data);
     })
 }
-},[]);
+},[props.isAuthenticated]);
 
 let users = null
 
