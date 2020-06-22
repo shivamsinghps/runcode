@@ -11,6 +11,8 @@ const Home = lazy(() => import ('./containers/Home/Home'))
 const Login = lazy(() => import ('./containers/Authentication/Login'))
 const Logout = lazy(() => import ('./containers/Authentication/Logout/Logout'))
 const Users = lazy(() => import ('./components/Users/Users'))
+const Details = lazy(() => import ('./components/Users/Details/Details'))
+const SignUpDetails = lazy(()=> import ('./components/SignUpDetails/SignUpDetails'))
 
 
 
@@ -29,6 +31,8 @@ render(){
             <SideDrawer />
               <Suspense fallback={<Spinner/>}>
                 <Switch>
+                 <Route path='/Details' exact component={SignUpDetails} />
+                 <Route path='/User/:id' exact component={Details} />
                   <Route path='/Users' exact component={Users} />
                   <Route path='/Login' exact component={Login} />
                   <Route path='/Logout' exact component={Logout} />

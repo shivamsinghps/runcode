@@ -9,11 +9,13 @@ const checkAdmin = require('../middlewares/adminauth')
 
 router.get('/users',checkAdmin,UserController.users_list)
 
+router.get('/user/:id',checkAdmin,UserController.user)
+
 router.post('/signup', UserController.user_signup)
 
 router.post('/login', UserController.user_login)
 
-// router.post('/profileSetup', checkAuth, UserController.user_form)
+router.post('/profileSetup', checkAuth, UserController.user_form)
 
 // router.get('/oauthredirect',passport.authenticate('google',
 // { failureRedirect: process.env.CLIENT_SITE+'/Login' }),OAuthController.user)

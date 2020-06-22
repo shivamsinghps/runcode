@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const errorInit = require('../../util_functions/errorcrtr');
 const User = require('../../models/user');
+const UserData = require('../../models/userdata')
 
 exports.user_signup = (req, res, next) => {
   User.find({email: req.body.email})
@@ -33,7 +34,8 @@ exports.user_signup = (req, res, next) => {
                 idToken:token,
                 expiresIn:3600,
                 localId:user.email,
-                admin:admin
+                admin:admin,
+                cust:'true'
               });
           })
           .catch((err) => next(errorInit(`${err.message}database connection error`, 500)));
@@ -68,7 +70,8 @@ exports.user_login = (req, res, next) => {
               idToken:token,
               expiresIn:3600,
               localId:user.email,
-              admin:admin
+              admin:admin,
+              cust:'false'
             });
         }
       });
@@ -77,7 +80,28 @@ exports.user_login = (req, res, next) => {
 };
 
 exports.user_form = async (req, res, next) => {
-  res.json({msg:'form'})
+  UserData.find({email: req.userData.email})
+  .then((user)=>{
+    if(user.length>=1){
+      next(errorInit('UserData Exists',409))
+    }else{
+      const newuserdata =new UserData({
+        firstName: req.body.firstName,
+        secondName: req.body.secondName,
+        address: req.body.address,
+        email: req.userData.email,
+        firstPhone: req.body.firstPhone,
+        secondPhone: req.body.secondPhone,
+        city: req.body.city,
+        state: req.body.state,
+        zipCode: req.body.zipCode,
+        country: req.body.country
+      })
+      newuserdata.save().then((user)=>{
+        res.status(200).json({message:'User Data Saved'})
+      }).catch((err) => next(errorInit(`${err.message}database connection error`, 500)))
+    }
+  })
 };
 
 exports.users_list = (req, res, next) => {
@@ -85,6 +109,19 @@ exports.users_list = (req, res, next) => {
   .then(users=>{
     res.json({
       data:users
+
+    })
+  })
+  .catch((err)=> next(errorInit(`${err.message}database connection error`, 500)))
+
+
+};
+
+exports.user = (req, res, next) => {
+  UserData.find({email:req.params.id})
+  .then(users=>{
+    res.json({
+      data:users[0]
 
     })
   })

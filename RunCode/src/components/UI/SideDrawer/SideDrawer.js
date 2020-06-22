@@ -38,7 +38,7 @@ const SideDrawer=(props)=> {
   {
     primarylinks = ['Home','Users','Orders','Purchase','Logout']
   }else{
-    primarylinks = props.isAuthenticated ? ['Home','Orders','Purchase','Logout'] : ['Home','Login']
+    primarylinks = props.isAuthenticated ? ['Home','Orders','Purchase','Logout'] : ['Home','Details','Login']
   }
   const toggleDrawer = () => {
     props.OnsideClick()

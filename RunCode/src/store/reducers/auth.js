@@ -7,12 +7,18 @@ const initialState ={
 	error:null,
 	loading:false,
 	authredirect:'/',
+	cust:null
 
 }
 
 const reducer = (state=initialState , action )=>{
 	switch(action.type)
 	{
+		case actionTypes.CLEAR_CUST:
+		return{
+			...state,
+			cust:null
+		}
 	  case actionTypes.AUTH_REDIRECT_PATH:
 		return{
 			...state,
@@ -37,6 +43,7 @@ const reducer = (state=initialState , action )=>{
 			token:action.token,
 			email:action.userId,
 			isadmin:action.admin,
+			cust:action.cust,
 			error:null,
 			loading:false
 		}

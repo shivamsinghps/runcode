@@ -49,7 +49,7 @@ const HomeWiget = (props)=>{
                       type="password"
                       onChange={props.changeHandler}
                     />
-            <Button type='submit' style={{display:'block',width:'50%',margin:'auto',padding:'20px'}}>
+            <Button type='submit'  style={{display:'block',width:'50%',margin:'auto',padding:'20px'}}>
             SignUp
             </Button>
           </form>

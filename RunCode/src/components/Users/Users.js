@@ -1,5 +1,6 @@
 import React , { Fragment,useState,useEffect } from 'react'
 import classes from './Users.module.css'
+import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import userimg from '../../images/shivam.jpg'
 import ProfileCard from './Card/Card'
@@ -8,13 +9,9 @@ import axios from 'axios'
 
 
 
+
 const Users = (props)=>{
-const profile = {
-  imageUrl:userimg,
-  imageTitle:'FSD',
-  Name:'Shivam Singh',
-  Description:'Fullstack Developer'
-}
+
 const [posts, setPosts] = useState([]);
 
 useEffect(() => {
@@ -34,10 +31,10 @@ let users = null
 users = posts.map(post=>{
     return(
       <Grid key={post._id} item xs={4} sm={2} >
-    <ProfileCard imageUrl={userimg}
-    imageTitle={profile.imageTitle}
+      <Link to={`/user/${post.email}`}><ProfileCard imageUrl={userimg}
+    imageTitle={userimg}
     Name={post._id}
-    Description={post.email}/>
+    Description={post.email}/></Link>
     </Grid>
   )
   })

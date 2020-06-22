@@ -7,22 +7,27 @@ export const auth_start = () =>{
 	}
 }
 
-export const auth_success = (authtoken,authid,admin) =>{
+export const auth_success = (authtoken,authid,admin,cust) =>{
 
 	return{
 		type:actionTypes.AUTH_SUCCESS,
 		token:authtoken,
 		userId:authid,
-		admin:admin
+		admin:admin,
+		cust:cust
 	}
 }
 
-export const auth_google = (idToken,expiresIn,localId,admin) =>{
+export const cust_status = ()=>{
+	return {
+		type:actionTypes.CLEAR_CUST
+	}
+}
+
+export const auth_google = (idToken,expiresIn,localId,admin,cust) =>{
 	const adminstate = admin === "false" ? false:true
-
 	return dispatch =>{
-
-		dispatch(auth_success(idToken,localId,adminstate))
+		dispatch(auth_success(idToken,localId,adminstate,cust))
 		dispatch(authinvalidate(expiresIn))
 	}
 }
@@ -55,7 +60,7 @@ export const authinit = (email,password,isSignup) =>{
 		localStorage.setItem('token',response.data.idToken)
 		localStorage.setItem('expirationDate',expirationDate)
 		localStorage.setItem('userId',response.data.localId)
-		dispatch(auth_success(response.data.idToken,response.data.localId,response.data.admin))
+		dispatch(auth_success(response.data.idToken,response.data.localId,response.data.admin,response.data.cust))
 		dispatch(authinvalidate(response.data.expiresIn))
 		})
 		.catch(err =>{

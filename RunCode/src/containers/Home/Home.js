@@ -6,6 +6,7 @@ import headerBackground from '../../images/Header.jpg'
 import {connect} from 'react-redux'
 import * as authactions from '../../store/actions'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import { Redirect } from 'react-router-dom'
 
 
 class Header extends Component{
@@ -14,42 +15,31 @@ class Header extends Component{
     email:'',
     password:'',
     loaded:false,
-    isValid:false
+    isValid:false,
   }
 
 
-componentWillMount(){
+componentDidMount(){
   this.setState({loaded:true})
 if(this.props.location.search!==""){
   let auth = []
   const query = new URLSearchParams( this.props.location.search )
   for ( let param of query.entries() )
     auth.push(param[1])
-  console.log(auth[3]);
-  this.props.OAuthCheck(auth[0],auth[1],auth[2],auth[3])
+
+  this.props.OAuthCheck(auth[0],auth[1],auth[2],auth[3],auth[4])
+
 }
-  // const config = {
-  //       method: 'get',
-  //       url: 'http://localhost:9000/auth/google/secrets',
-  //       headers: { 'Access-Control-Allow-Origin' : '*',
-  //                   'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-  //                   'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',}
-  //   }
-  // axios(config).then((response)=>{console.log(response)}).catch(err=>{console.log(err);})
 }
 
 
 // Handling the input of textfield
  changeHandler = (event) => {
-
-
     if(event.target.name === 'email')
     this.setState({email:event.target.value})
 
     if(event.target.name === 'password')
     this.setState({password:event.target.value})
-
-
   }
 
 // Handling submit and evaluating the email
@@ -59,19 +49,12 @@ if(this.props.location.search!==""){
  }
 
 googleHandler = () =>{
-  // const config = {
-  //       method: 'get',
-  //       url: 'http://localhost:9000/auth/google',
-  //       headers: { 'Access-Control-Allow-Origin' : '*',
-  //                   'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-  //                   'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',}
-  //   }
-  // axios(config).then((response)=>{console.log(response)}).catch(err=>{console.log(err);})
-
   window.open("http://localhost:9001/api/auth/google","_self")
 }
 
 render(){
+
+
 
 let widgets = this.state.loaded? (
 <div>
@@ -84,12 +67,18 @@ changeHandler={this.changeHandler}
 </div>
 ):null
 
-let home = this.props.loading?(<Spinner />):(<header className={classes.Header} style={{backgroundImage: `url(${headerBackground}) `,right:this.props.side?'23vw':null}}>
+let home = this.props.loading?(<Spinner />):(<><header className={classes.Header} style={{backgroundImage: `url(${headerBackground}) `,right:this.props.side?'23vw':null}}>
     {!this.props.isAuthenticated?widgets:<h1>Hello</h1>}
 
-</header>)
+</header></>)
 
-  return(<React.Fragment>{home}</React.Fragment>)}
+let redirect = null
+console.log(this.props.cust);
+if(this.props.cust==='true'&& this.props.isAuthenticated){
+redirect = <Redirect to='/Details' />
+}
+
+  return(<div>{redirect}{home}</div>)}
 }
 
 const mapStateToProps = state =>{
@@ -97,13 +86,14 @@ const mapStateToProps = state =>{
     loading:state.auth.loading,
 		isAuthenticated: state.auth.token !== null,
 		authredirect:state.auth.authredirect,
-    side:state.ui.side
+    side:state.ui.side,
+    cust:state.auth.cust
 }}
 
 const mapDispatchToProps = dispatch =>{
     return{
   OnSubmit:(email,password,isSignup)=>dispatch(authactions.authinit(email,password,isSignup)),
-  OAuthCheck:(token,expiresIn,id,admin)=>dispatch(authactions.auth_google(token,expiresIn,id,admin))
+  OAuthCheck:(token,expiresIn,id,admin,cust)=>dispatch(authactions.auth_google(token,expiresIn,id,admin,cust))
   }
 }
 
